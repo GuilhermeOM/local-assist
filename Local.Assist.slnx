@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Local.Assist.Application/Local.Assist.Application.csproj" />
+    <Project Path="src/Local.Assist.Domain/Local.Assist.Domain.csproj" />
+    <Project Path="src/Local.Assist.Infrastructure/Local.Assist.Infrastructure.csproj" />
+    <Project Path="src/Local.Assist/Local.Assist.csproj" />
+  </Folder>
+</Solution>

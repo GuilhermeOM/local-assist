@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Local.Assist (Development)",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/Local.Assist/bin/Debug/net10.0/Local.Assist.dll",
+      "cwd": "${workspaceFolder}/src/Local.Assist",
+      "env": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  ]
+}
