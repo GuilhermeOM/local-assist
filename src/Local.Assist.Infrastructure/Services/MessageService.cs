@@ -1,6 +1,8 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Local.Assist.Application.Abstractions.Behaviors;
+using Local.Assist.Application.CustomTools;
 using Local.Assist.Domain.Services;
 using Microsoft.Extensions.Logging;
 using OllamaSharp;
@@ -21,11 +23,15 @@ internal sealed class MessageService : IMessageService
     public MessageService(
         ILogger<MessageService> logger,
         ISpeechService speechService,
-        OllamaApiClient ollamaApiClient)
+        OllamaApiClient ollamaApiClient,
+        CustomToolInvoker customToolInvoker)
     {
         _logger = logger;
         _speechService = speechService;
-        _chat = new Chat(ollamaApiClient);
+        _chat = new Chat(ollamaApiClient)
+        {
+            ToolInvoker = customToolInvoker
+        };
 
         _chat.OnThink += (_, thought) => _logger.LogInformation("[THOUGHT] {Thought}", thought);
     }
@@ -37,7 +43,10 @@ internal sealed class MessageService : IMessageService
         var prompt = new Prompt(UserMessage: message);
         var promptString = JsonSerializer.Serialize(prompt, _jsonSerializerOptions);
 
-        await foreach (var response in _chat.SendAsync(promptString, cancellationToken))
+        await foreach (var response in _chat.SendAsync(promptString, tools:
+        [
+            new GetCurrentDateTimeTool()
+        ], cancellationToken: cancellationToken))
         {
             if (string.IsNullOrEmpty(response))
             {

@@ -10,7 +10,7 @@ builder.Services.AddSerilog((context, configuration) =>
 });
 
 builder.Services
-    .AddApplication(builder.Configuration)
+    .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
 var host = builder.Build();

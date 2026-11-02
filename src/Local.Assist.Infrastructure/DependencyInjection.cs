@@ -45,7 +45,7 @@ public static class DependencyInjection
              throw new InvalidOperationException("Missing speech to text model configuration.");
         }
 
-        var modelName = $"ggml-{modelConfig}";
+        var modelName = $"ggml-{modelConfig}.bin";
 
         if (!File.Exists(modelName))
         {
