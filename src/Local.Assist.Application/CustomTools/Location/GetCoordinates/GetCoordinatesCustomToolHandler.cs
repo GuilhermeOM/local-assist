@@ -3,7 +3,7 @@ using Local.Assist.Application.Abstractions.Messaging;
 using Local.Assist.Domain.HttpClients.Nominatim;
 using Local.Assist.Domain.ValueObjects;
 
-namespace Local.Assist.Application.CustomTools.GetCoordinates;
+namespace Local.Assist.Application.CustomTools.Location.GetCoordinates;
 
 internal sealed class GetCoordinatesCustomToolHandler : ICustomToolHandler<GetCoordinatesCustomTool>
 {

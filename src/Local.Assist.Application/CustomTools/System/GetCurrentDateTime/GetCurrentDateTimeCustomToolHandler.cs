@@ -1,7 +1,7 @@
 using Local.Assist.Application.Abstractions.Messaging;
 using Local.Assist.Domain.ValueObjects;
 
-namespace Local.Assist.Application.CustomTools.GetCurrentDateTime;
+namespace Local.Assist.Application.CustomTools.System.GetCurrentDateTime;
 
 internal sealed class GetCurrentDateTimeCustomToolHandler : ICustomToolHandler<GetCurrentDateTimeCustomTool>
 {

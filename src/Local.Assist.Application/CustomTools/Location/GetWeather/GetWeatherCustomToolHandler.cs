@@ -3,7 +3,7 @@ using Local.Assist.Application.Abstractions.Messaging;
 using Local.Assist.Domain.HttpClients.OpenMeteo;
 using Local.Assist.Domain.ValueObjects;
 
-namespace Local.Assist.Application.CustomTools.GetWeather;
+namespace Local.Assist.Application.CustomTools.Location.GetWeather;
 
 internal sealed class GetWeatherCustomToolHandler : ICustomToolHandler<GetWeatherCustomTool>
 {

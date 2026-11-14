@@ -1,6 +1,6 @@
-using Local.Assist.Application.CustomTools.GetCoordinates;
-using Local.Assist.Application.CustomTools.GetCurrentDateTime;
-using Local.Assist.Application.CustomTools.GetWeather;
+using Local.Assist.Application.CustomTools.Location.GetCoordinates;
+using Local.Assist.Application.CustomTools.Location.GetWeather;
+using Local.Assist.Application.CustomTools.System.GetCurrentDateTime;
 using OllamaSharp;
 using System.Globalization;
 
@@ -8,12 +8,15 @@ namespace Local.Assist.Application.CustomTools;
 
 public sealed class Tools
 {
+    #region System Tools
     /// <summary>
     /// Obtem a data e hora atual do sistema.
     /// </summary>
     [OllamaTool]
     public static GetCurrentDateTimeCustomTool GetCurrentDateTime() => new();
+    #endregion
 
+    #region Location Tools
      /// <summary>
     /// Obtem as coordenadas geográficas (latitude e longitude) de uma cidade e estado específicos.
     /// </summary>
@@ -38,4 +41,5 @@ public sealed class Tools
 
         return new(latitude, longitude, parsedDate);
     }
+    #endregion
 }
