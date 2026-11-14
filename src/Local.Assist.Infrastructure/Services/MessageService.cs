@@ -45,7 +45,9 @@ internal sealed class MessageService : IMessageService
 
         await foreach (var response in _chat.SendAsync(promptString, tools:
         [
-            new GetCurrentDateTimeTool()
+            new GetCurrentDateTimeTool(),
+            new GetCoordinatesTool(),
+            new GetWeatherTool()
         ], cancellationToken: cancellationToken))
         {
             if (string.IsNullOrEmpty(response))

@@ -48,7 +48,7 @@ internal sealed class MicrophoneCapturerBackground : BackgroundService
                 AudioConstants.Channel),
         };
 
-        microphone.DataAvailable += (sender, eventArgs) => OnMicrophoneDataAvailable(sender, eventArgs);
+        microphone.DataAvailable += OnMicrophoneDataAvailable;
         microphone.StartRecording();
 
         _transcriptionService.StartRecording();
