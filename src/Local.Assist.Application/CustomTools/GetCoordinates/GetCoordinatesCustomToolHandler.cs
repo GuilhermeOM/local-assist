@@ -1,24 +1,24 @@
 using System.Text.Json;
 using Local.Assist.Application.Abstractions.Messaging;
-using Local.Assist.Domain.HttpClients.Nomatin;
+using Local.Assist.Domain.HttpClients.Nominatin;
 using Local.Assist.Domain.ValueObjects;
 
 namespace Local.Assist.Application.CustomTools.GetCoordinates;
 
 internal sealed class GetCoordinatesCustomToolHandler : ICustomToolHandler<GetCoordinatesCustomTool>
 {
-    private readonly INomatinHttpClient _nomatinHttpClient;
+    private readonly INominatinHttpClient _nominatinHttpClient;
 
-    public GetCoordinatesCustomToolHandler(INomatinHttpClient nomatinHttpClient)
+    public GetCoordinatesCustomToolHandler(INominatinHttpClient nomatinHttpClient)
     {
-        _nomatinHttpClient = nomatinHttpClient;
+        _nominatinHttpClient = nomatinHttpClient;
     }
 
     public async Task<PromptResult> HandleAsync(
         GetCoordinatesCustomTool tool,
         CancellationToken cancellationToken = default)
     {
-        var result = await _nomatinHttpClient.GetGeoInfoAsync(
+        var result = await _nominatinHttpClient.GetGeoInfoAsync(
            tool.City,
            tool.State,
            cancellationToken);

@@ -1,12 +1,15 @@
-﻿using Local.Assist.Domain.HttpClients.Nomatin;
+﻿using Local.Assist.Domain.HttpClients.Nominatin;
 using Local.Assist.Domain.HttpClients.OpenMeteo;
 using Local.Assist.Domain.Services;
 using Local.Assist.Infrastructure.Backgrounds;
+using Local.Assist.Infrastructure.HttpClients.Configuration;
 using Local.Assist.Infrastructure.HttpClients.DelegateHandlers;
+using Local.Assist.Infrastructure.Resiliences;
 using Local.Assist.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OllamaSharp;
+using Polly;
 using Whisper.net.Ggml;
 
 namespace Local.Assist.Infrastructure;
@@ -22,7 +25,7 @@ public static class DependencyInjection
             .AddOllama(configuration)
             .AddBackgroundServices()
             .AddServices()
-            .AddHttpClients();
+            .AddHttpClients(configuration);
     }
 
     private static IServiceCollection AddBackgroundServices(this IServiceCollection services)
@@ -75,22 +78,31 @@ public static class DependencyInjection
         return services.AddSingleton(ollamaApiClient);
     }
 
-    private static IServiceCollection AddHttpClients(this IServiceCollection services)
+    private static IServiceCollection AddHttpClients(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddTransient<HttpRequestLoggingHandler>();
+        services.AddTransient<LoggingDelegateHandler>();
 
-        services.AddHttpClient<IOpenMeteoHttpClient, OpenMeteoHttpClient>(client =>
+        var httpClients = configuration.GetRequiredSection("HttpClients").Get<HttpClientConfiguration[]>();
+        if (httpClients is null || httpClients.Length == 0)
         {
-            client.BaseAddress = new Uri("https://api.open-meteo.com/");
-        })
-        .AddHttpMessageHandler<HttpRequestLoggingHandler>();
+            return services;
+        }
 
-        services.AddHttpClient<INomatinHttpClient, NomatinHttpClient>(client =>
+        foreach (var httpClient in httpClients)
         {
-            client.BaseAddress = new Uri("https://nominatim.openstreetmap.org/");
-            client.DefaultRequestHeaders.UserAgent.ParseAdd("Local.Assist/1.0 (contact: guilherme.omalta@gmail.com)");
-        })
-        .AddHttpMessageHandler<HttpRequestLoggingHandler>();
+            services.AddKeyedSingleton(httpClient.Name, httpClient);
+
+            services.AddResiliencePipeline(
+                ResilienceNames.HttpClientCircuitBreakerPolicy(httpClient.Name),
+                builder => ResilienceBuilder.HttpClientCircuitBreakerPolicy(builder, httpClient));
+
+            services.AddResiliencePipeline(
+                ResilienceNames.HttpClientRetryPolicy(httpClient.Name),
+                builder => ResilienceBuilder.HttpClientRetryPolicy(builder, httpClient));
+        }
+
+        services.AddCustomHttpClient<INominatinHttpClient, NominatinHttpClient>();
+        services.AddCustomHttpClient<IOpenMeteoHttpClient, OpenMeteoHttpClient>();
 
         return services;
     }

@@ -1,14 +1,14 @@
 using System.Text.Json;
 using Local.Assist.Domain.Errors;
-using Local.Assist.Domain.HttpClients.Nomatin;
-using Local.Assist.Domain.HttpClients.Nomatin.Responses;
+using Local.Assist.Domain.HttpClients.Nominatin;
+using Local.Assist.Domain.HttpClients.Nominatin.Responses;
 using Local.Assist.Domain.Shared;
 
-internal sealed class NomatinHttpClient : INomatinHttpClient
+internal sealed class NominatinHttpClient : INominatinHttpClient
 {
     private readonly HttpClient _httpClient;
 
-    public NomatinHttpClient(HttpClient httpClient)
+    public NominatinHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }

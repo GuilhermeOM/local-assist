@@ -3,11 +3,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Local.Assist.Infrastructure.HttpClients.DelegateHandlers;
 
-internal sealed class HttpRequestLoggingHandler : DelegatingHandler
+internal sealed class LoggingDelegateHandler : DelegatingHandler
 {
-    private readonly ILogger<HttpRequestLoggingHandler> _logger;
+    private readonly ILogger<LoggingDelegateHandler>  _logger;
 
-    public HttpRequestLoggingHandler(ILogger<HttpRequestLoggingHandler> logger)
+    public LoggingDelegateHandler(ILogger<LoggingDelegateHandler> logger)
     {
         _logger = logger;
     }
