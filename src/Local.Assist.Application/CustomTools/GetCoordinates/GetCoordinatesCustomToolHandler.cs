@@ -1,15 +1,15 @@
 using System.Text.Json;
 using Local.Assist.Application.Abstractions.Messaging;
-using Local.Assist.Domain.HttpClients.Nominatin;
+using Local.Assist.Domain.HttpClients.Nominatim;
 using Local.Assist.Domain.ValueObjects;
 
 namespace Local.Assist.Application.CustomTools.GetCoordinates;
 
 internal sealed class GetCoordinatesCustomToolHandler : ICustomToolHandler<GetCoordinatesCustomTool>
 {
-    private readonly INominatinHttpClient _nominatinHttpClient;
+    private readonly INominatimHttpClient _nominatinHttpClient;
 
-    public GetCoordinatesCustomToolHandler(INominatinHttpClient nomatinHttpClient)
+    public GetCoordinatesCustomToolHandler(INominatimHttpClient nomatinHttpClient)
     {
         _nominatinHttpClient = nomatinHttpClient;
     }

@@ -1,4 +1,4 @@
-﻿using Local.Assist.Domain.HttpClients.Nominatin;
+﻿using Local.Assist.Domain.HttpClients.Nominatim;
 using Local.Assist.Domain.HttpClients.OpenMeteo;
 using Local.Assist.Domain.Services;
 using Local.Assist.Infrastructure.Backgrounds;
@@ -101,7 +101,7 @@ public static class DependencyInjection
                 builder => ResilienceBuilder.HttpClientRetryPolicy(builder, httpClient));
         }
 
-        services.AddCustomHttpClient<INominatinHttpClient, NominatinHttpClient>();
+        services.AddCustomHttpClient<INominatimHttpClient, NominatimHttpClient>();
         services.AddCustomHttpClient<IOpenMeteoHttpClient, OpenMeteoHttpClient>();
 
         return services;

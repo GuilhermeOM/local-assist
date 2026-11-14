@@ -1,9 +1,9 @@
-using Local.Assist.Domain.HttpClients.Nominatin.Responses;
+using Local.Assist.Domain.HttpClients.Nominatim.Responses;
 using Local.Assist.Domain.Shared;
 
-namespace Local.Assist.Domain.HttpClients.Nominatin;
+namespace Local.Assist.Domain.HttpClients.Nominatim;
 
-public interface INominatinHttpClient
+public interface INominatimHttpClient
 {
     Task<Result<GetGeoInfoResponse[]>> GetGeoInfoAsync(
         string city,
